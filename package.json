@@ -1,0 +1,22 @@
+{
+  "name": "ts-remotedata",
+  "version": "1.0.0",
+  "description": "Useful http response handling modeled after the Elm RemoteData package",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smaccoun/ts-remotedata.git"
+  },
+  "author": "Steven MacCoun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smaccoun/ts-remotedata/issues"
+  },
+  "homepage": "https://github.com/smaccoun/ts-remotedata#readme",
+  "devDependencies": {
+    "typescript": "^2.7.2"
+  }
+}
