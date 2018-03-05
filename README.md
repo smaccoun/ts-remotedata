@@ -3,12 +3,12 @@ Typescript version of Elm RemoteData package
 
 Currently WIP
 
-##Why?
+## Why?
 
 Handling http requests and all possible outcomes is a challenge in javascript.
 This package provides a typesafe and clean way to handle everything from a successful response to a 422 to a network error.
 
-##API
+## API
 
 ```
   type RemoteData a RemoteError =
