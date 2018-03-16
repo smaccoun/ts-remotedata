@@ -14,7 +14,7 @@ interface Mutate_HTTP {
 type REQUEST_HTTP = Get_HTTP | Mutate_HTTP
 
 
-function remoteRequest(url: string, requestHttpInfo: REQUEST_HTTP): RemoteData {
+export function remoteRequest(url: string, requestHttpInfo: REQUEST_HTTP): RemoteData {
     let remoteData: RemoteData = {type: RemoteDataC.LOADING}
 
     fetch(url, requestHttpInfo)
