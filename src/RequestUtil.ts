@@ -1,4 +1,4 @@
-import {HttpResponse, RemoteData, RemoteDataC, RemoteError, RemoteErrorC} from "./RemoteData";
+import {HttpResponse, RemoteData, RemoteDataC, RemoteError, RemoteErrorC, WebData} from "./RemoteData";
 
 interface Get_HTTP {
     method: string
@@ -14,8 +14,8 @@ interface Mutate_HTTP {
 type REQUEST_HTTP = Get_HTTP | Mutate_HTTP
 
 
-export function remoteRequest(url: string, requestHttpInfo: REQUEST_HTTP): RemoteData {
-    let remoteData: RemoteData = {type: RemoteDataC.LOADING}
+export function remoteRequest<a>(url: string, requestHttpInfo: REQUEST_HTTP): WebData<a> {
+    let requestResult: WebData<a> = {type: RemoteDataC.LOADING}
 
     fetch(url, requestHttpInfo)
         .then(response => {
@@ -24,18 +24,18 @@ export function remoteRequest(url: string, requestHttpInfo: REQUEST_HTTP): Remot
             if (returnStatuses.includes(status)) {
                 response.json()
                     .then(body => {
-                        remoteData = mapHttpStatuses(url, status, body)
+                        requestResult = mapHttpStatuses(url, status, body)
                     })
             }
         })
         .catch(error => {
-            remoteData = {type: RemoteDataC.FAILURE, error: {type: RemoteErrorC.NETWORK_ERROR}}
+            requestResult = {type: RemoteDataC.FAILURE, error: {type: RemoteErrorC.NETWORK_ERROR}}
         })
 
-    return remoteData
+    return requestResult
 }
 
-function mapHttpStatuses(url: string, status: number, body: any): RemoteData {
+function mapHttpStatuses<a>(url: string, status: number, body: any): WebData<a> {
     if (status == 200) {
         return {type: RemoteDataC.SUCCESS, data: body}
     }

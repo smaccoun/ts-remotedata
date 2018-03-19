@@ -10,7 +10,6 @@ const GET_HEADER =
     }
 
 
-
 function doWithResult() {
     const result: WebData<string> = remoteRequest("'https://jsonplaceholder.typicode.com/posts/1'", GET_HEADER)
 
