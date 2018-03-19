@@ -1,3 +1,6 @@
+export type RemoteData<a,e> = Success<a> | Failure<e> | Loading | NotAsked
+export type WebData<a> = Success<a> | Failure<RemoteError> | Loading | NotAsked
+
 export enum RemoteDataC {
     SUCCESS = 'SUCCESS',
     FAILURE = 'FAILURE',
@@ -25,9 +28,6 @@ interface NotAsked {
     type: RemoteDataC.NOT_ASKED
 }
 
-
-export type RemoteData<a,e> = Success<a> | Failure<e> | Loading | NotAsked
-export type WebData<a> = Success<a> | Failure<RemoteError> | Loading | NotAsked
 
 
 /** Response Types **/
