@@ -11,7 +11,7 @@ This package provides a typesafe and clean way to handle everything from a succe
 Will allow you to do things like...
 
 
-```
+```typescript
     const sampleApiUrl = "https://jsonplaceholder.typicode.com/posts/1"
     let result: WebData<User>;
     result = remoteRequest(sampleApiUrl, GET_HEADER)
@@ -33,7 +33,7 @@ Will allow you to do things like...
 
 ## API
 
-```
+```typescript
   type RemoteData a RemoteError =
        Success a
      | Error e
