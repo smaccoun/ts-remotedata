@@ -5,14 +5,14 @@ export enum RemoteDataC {
     NOT_ASKED = 'NOT_ASKED'
 }
 
-interface Success {
+interface Success<a> {
     type: RemoteDataC.SUCCESS
-    data: any
+    data: a
 }
 
-interface Failure {
+interface Failure<e> {
     type: RemoteDataC.FAILURE
-    error: RemoteError
+    error: e
 }
 
 
@@ -26,7 +26,8 @@ interface NotAsked {
 }
 
 
-export type RemoteData = Success | Failure | Loading | NotAsked
+export type RemoteData<a,e> = Success<a> | Failure<e> | Loading | NotAsked
+export type WebData<a> = Success<a> | Failure<RemoteError> | Loading | NotAsked
 
 
 /** Response Types **/

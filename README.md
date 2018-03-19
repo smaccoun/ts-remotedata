@@ -1,7 +1,7 @@
 # ts-remotedata
 Typescript version of Elm RemoteData package
 
-Currently WIP
+### Currently WIP!
 
 ## Why?
 
