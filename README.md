@@ -1,5 +1,5 @@
 # ts-remotedata
-Typescript version of Elm RemoteData package
+Typescript version of [Elm RemoteData package](http://package.elm-lang.org/packages/krisajenkins/remotedata/4.3.3/RemoteData)
 
 ### Currently WIP!
 
@@ -12,7 +12,9 @@ Will allow you to do things like...
 
 
 ```
-    const result: WebData<User> = remoteRequest("'https://jsonplaceholder.typicode.com/posts/1'", GET_HEADER)
+    const sampleApiUrl = "https://jsonplaceholder.typicode.com/posts/1"
+    let result: WebData<User>;
+    result = remoteRequest(sampleApiUrl, GET_HEADER)
 
     switch(result.type){
         case RemoteDataC.SUCCESS:

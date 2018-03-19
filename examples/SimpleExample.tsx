@@ -11,7 +11,9 @@ const GET_HEADER =
 
 
 function doWithResult() {
-    const result: WebData<string> = remoteRequest("'https://jsonplaceholder.typicode.com/posts/1'", GET_HEADER)
+    const sampleApiUrl = "https://jsonplaceholder.typicode.com/posts/1"
+    let result: WebData<string>;
+    result = remoteRequest(sampleApiUrl, GET_HEADER)
 
     switch(result.type){
         case RemoteDataC.SUCCESS:
