@@ -1,5 +1,5 @@
 # ts-remotedata
-Typescript version of [Elm RemoteData package](http://package.elm-lang.org/packages/krisajenkins/remotedata/4.3.3/RemoteData)
+Simple, zero dependency Typescript version of [Elm RemoteData package](http://package.elm-lang.org/packages/krisajenkins/remotedata/4.3.3/RemoteData)
 
 ### Currently WIP!
 
