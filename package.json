@@ -12,7 +12,7 @@
   "author": "Steven MacCoun <theraccoun@gmail.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/smaccoun/ts-remotedata"
   },
   "license": "MIT",
   "engines": {
