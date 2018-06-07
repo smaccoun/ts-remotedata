@@ -1,5 +1,15 @@
-export type RemoteData<a,e> = Success<a> | Failure<e> | Loading | NotAsked
-export type WebData<a> = Success<a> | Failure<RemoteError> | Loading | NotAsked
+export type RemoteData<a,e> = 
+    Success<a> 
+  | Failure<e> 
+  | Loading 
+  | NotAsked
+
+
+export type WebData<a> = 
+      Success<a> 
+    | Failure<RemoteError> 
+    | Loading 
+    | NotAsked
 
 export enum RemoteDataC {
     SUCCESS = 'SUCCESS',
@@ -27,7 +37,6 @@ interface Loading {
 interface NotAsked {
     type: RemoteDataC.NOT_ASKED
 }
-
 
 
 /** Response Types **/
@@ -63,4 +72,7 @@ interface TimeOut {
     type: RemoteErrorC.TIMEOUT
 }
 
-export type RemoteError = NetworkError | TimeOut | BadStatus
+export type RemoteError = 
+      NetworkError 
+    | TimeOut 
+    | BadStatus

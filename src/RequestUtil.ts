@@ -1,46 +1,77 @@
 import {HttpResponse, RemoteData, RemoteDataC, RemoteError, RemoteErrorC, WebData} from "./RemoteData";
+import { request } from "http";
 
-interface Get_HTTP {
+export interface Get_HTTP {
     method: string
     headers: any
 }
 
-interface Mutate_HTTP {
+export interface Mutate_HTTP {
     method: string
     headers: any
     body: any
 }
 
-type REQUEST_HTTP = Get_HTTP | Mutate_HTTP
+export type REQUEST_HTTP = Get_HTTP | Mutate_HTTP
+
+const RETURN_STATUSES = [200, 422, 401, 500]
+
+export function remoteRequestPromise<a>(url: string, requestHttpInfo: REQUEST_HTTP): Promise<WebData<a>> {
+    return new Promise((resolve, reject) => {
+        fetch(url, requestHttpInfo)
+            .then(response => {
+                const {status} = response
+                if (RETURN_STATUSES.includes(status)) {
+                    response.json()
+                        .then(body => {
+                            resolve(mapHttpStatuses(url, status, body))
+                        })
+                } else{
+                    throw new Error()
+                }
+            })
+            .catch(error => {
+                const remoteError: WebData<RemoteError> =  
+                     { type: RemoteDataC.FAILURE 
+                     , error: {type: RemoteErrorC.NETWORK_ERROR} 
+                     }
+                resolve(remoteError)
+            })
+    })
+
+}
 
 
-export function remoteRequest<a>(url: string, requestHttpInfo: REQUEST_HTTP): WebData<a> {
-    let requestResult: WebData<a> = {type: RemoteDataC.LOADING}
-
-    fetch(url, requestHttpInfo)
-        .then(response => {
-            const {status} = response
-            const returnStatuses = [200, 422, 401, 500]
-            if (returnStatuses.includes(status)) {
-                response.json()
-                    .then(body => {
-                        requestResult = mapHttpStatuses(url, status, body)
-                    })
+export function remoteRequest<a>(url: string, requestHttpInfo: REQUEST_HTTP): any {
+    return {
+        handle: () => {
+            let requestResult: WebData<a> = {type: RemoteDataC.NOT_ASKED}
+            return {
+                initialState: requestResult,
+                remoteFetch
+                }
             }
-        })
-        .catch(error => {
-            requestResult = {type: RemoteDataC.FAILURE, error: {type: RemoteErrorC.NETWORK_ERROR}}
-        })
+        }
+}
+
+
+export function remoteFetch<a>(url: string, requestHttpInfo: REQUEST_HTTP): any {
+    let requestResult = {type: RemoteDataC.LOADING}
+    const sendRemoteRequest: Promise<WebData<a>> =  remoteRequestPromise(url, requestHttpInfo)
+    sendRemoteRequest
+        .then(result => requestResult = result)
 
     return requestResult
 }
 
-function mapHttpStatuses<a>(url: string, status: number, body: any): WebData<a> {
-    if (status == 200) {
+
+
+function mapHttpStatuses<a>(url: string, resultStatus: number, body: a): WebData<a> {
+    if (resultStatus == 200) {
         return {type: RemoteDataC.SUCCESS, data: body}
     }
     else {
-        const errorResponse: HttpResponse = {url, status: {code: status, message: body}}
+        const errorResponse: HttpResponse = {url, status: {code: resultStatus, message: "Bad status"}}
         const error: RemoteError = {type: RemoteErrorC.BAD_STATUS, response: errorResponse}
         return {type: RemoteDataC.FAILURE, error}
     }

@@ -1,0 +1,3 @@
+{
+  "presets": ['babel-polyfill', "es2016"]
+}
