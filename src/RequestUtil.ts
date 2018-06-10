@@ -64,13 +64,13 @@ export function remoteRequest<a>(url: string, requestHttpInfo: REQUEST_HTTP): IR
 
 }
 
-export interface IRequestResult<a> {
+export interface IRequestState<a> {
     getValue : () => WebData<a>;
     set: (r: WebData<a>) => WebData<a>
 }
 
-function requestResult(): IRequestResult<any> {
-    var value: WebData<any> = {type: RemoteDataC.LOADING}
+export function requestState(): IRequestState<any> {
+    let value: WebData<any> = {type: RemoteDataC.NOT_ASKED}
     function set(r: WebData<any>){
         value = r
         console.log('WORD: ', value)
