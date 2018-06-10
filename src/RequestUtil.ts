@@ -73,7 +73,6 @@ export function requestState(): IRequestState<any> {
     let value: WebData<any> = {type: RemoteDataC.NOT_ASKED}
     function set(r: WebData<any>){
         value = r
-        console.log('WORD: ', value)
         return value
     }
 

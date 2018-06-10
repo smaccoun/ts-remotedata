@@ -12,11 +12,12 @@ Will allow you to do things like...
 
 
 ```typescript
+    import {error404, requestState, remoteRequest} from "../src/RequestUtil"
     const sampleApiUrl = "https://jsonplaceholder.typicode.com/posts/1"
-    let result: WebData<User>;
-    result = remoteRequest(sampleApiUrl, GET_HEADER)
+    let remotePost = requestState();    // getter and setter of WebData<any>;
+    const req = remoteRequest(sampleApiUrl, GET_HEADER).fork(remotePost.set)
 
-    switch(result.type){
+    switch(remotePost.type){
         case RemoteDataC.SUCCESS:
             console.log("SUCCESS! " , result.data)
             break;
