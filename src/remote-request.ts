@@ -1,5 +1,4 @@
-import {HttpResponse, RemoteDataC, RemoteError, RemoteErrorC, WebData} from "./RemoteData";
-import { RemoteError } from "./RemoteData";
+import {HttpResponse, RemoteDataC, RemoteError, RemoteErrorC, WebData} from "./remote-data";
 
 export interface Get_HTTP {
     method: string

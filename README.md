@@ -12,17 +12,18 @@ Will allow you to do things like...
 
 
 ```typescript
-    import {error404, requestState, remoteRequest} from "../src/RequestUtil"
-    const sampleApiUrl = "https://jsonplaceholder.typicode.com/posts/1"
-    let remotePost = requestState();    // getter and setter of WebData<any>;
-    const req = remoteRequest(sampleApiUrl, GET_HEADER).fork(remotePost.set)
+    import {error404, requestState, remoteRequest} from "ts-remotedata/remote-request"
 
-    switch(remotePost.type){
+    const SAMPLE_API_URL = "https://jsonplaceholder.typicode.com/posts/1"
+    let remotePost = requestState();    // getter and setter of WebData<any>;
+    const req = remoteRequest(SAMPLE_API_URL, GET_HEADER).fork(remotePost.set)
+
+    switch(remotePost.getValue().type){
         case RemoteDataC.SUCCESS:
-            console.log("SUCCESS! " , result.data)
+            console.log("SUCCESS! " , remotePost.getValue().data)
             break;
         case RemoteDataC.FAILURE:
-            console.log("FAILURE: " , result.error)
+            console.log("FAILURE: " , remotePost.getValue().error)
         case RemoteDataC.LOADING:
             console.log("LOADING....")
             break;

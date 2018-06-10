@@ -1,5 +1,5 @@
-import {error404, requestState, remoteRequest} from "../src/RequestUtil"
-import { loading, notAsked, RemoteDataC, RemoteErrorC, WebData } from "../src/RemoteData";
+import {error404, requestState, remoteRequest} from "../src/remote-request"
+import { loading, notAsked, RemoteDataC, RemoteErrorC, WebData } from "../src/remote-data";
 import { makeRe } from "minimatch";
 
 const BAD_URL = 'www.thisisnotarealurlshouldreturn404.bad' 
