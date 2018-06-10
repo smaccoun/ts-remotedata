@@ -1,19 +1,24 @@
-import {remoteRequest, remoteFetch} from "../src/RequestUtil"
-import { RemoteDataC, RemoteErrorC } from "../src/RemoteData";
+import {error404, remoteRequest} from "../src/RequestUtil"
+import { loading, notAsked, RemoteDataC, RemoteErrorC, WebData } from "../src/RemoteData";
 import { makeRe } from "minimatch";
+
+const BAD_URL = 'www.thisisnotarealurlshouldreturn404.bad' 
+const getMethod = { method: 'GET', headers: null}
 
 beforeEach(function() {
 
   global.fetch = jest.fn().mockImplementation((url, requestHttpInfo) => {
       var p = new Promise((resolve, reject) => {
         resolve({
-          ok: true, 
-          Id: '123', 
+          ok: false, 
+          status: 404,
           json: function() { 
-            return {Id: '123'}
+            return new Promise((resolve, reject) => {
+              resolve({message: 'Invalid URL'})
+            })
           }
-        });
       });
+    })
 
       return p;
   });
@@ -22,21 +27,13 @@ beforeEach(function() {
 
 
 test('invalid url returns BadStatus 404', async () => {
-  const BAD_URL = 'www.thisisnotarealurlshouldreturn404.bad' 
-  const getMethod = { method: 'GET', headers: null} 
-  expect.assertions(2);
-  const makeRemoteFetch = () => {
-      return new Promise((resolve, reject) => 
-      {
-        let result = remoteFetch(BAD_URL, getMethod)
-        console.log(result)
-        expect(result).toEqual({type: RemoteDataC.LOADING})
-        resolve(result)
+  let r = {type: RemoteDataC.NOT_ASKED}
+  let allStates = [r]
 
-      })
+  const updateR = (res: WebData<any>) => {
+    allStates = allStates.concat(res)
   }
-
-  let r = await makeRemoteFetch()
-  expect(r).toEqual({type: RemoteDataC.FAILURE, error: {type: RemoteErrorC.BAD_STATUS}})
+  const req = await remoteRequest(BAD_URL, getMethod).fork(updateR)
+  expect(allStates).toEqual([notAsked, loading, error404(BAD_URL)])
 
 });
